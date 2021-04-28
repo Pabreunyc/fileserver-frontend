@@ -1,0 +1,22 @@
+<form [formGroup]="uploadForm" (ngSubmit)='onSubmit($event)'>
+    <div>
+        <label for="id_username">Username</label>
+        <input type="text" name="username" id="id_username" formControlName="fc_username">
+    </div>
+
+    <div>
+        <label for="id_module">Module</label>
+        <select name="module" id="id_module" formControlName="fc_module">
+            <option value=''>--Select--</option>
+            <option *ngFor="let m of moduleList$ | async">{{m}}</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="id_fupload">File(s)</label>
+        <input #fileUpload type='file' name='fupload' id='id_fupload' formControlName="fc_fupload">
+    </div>
+    
+    <button pButton type="submit" [disabled]='uploadForm.invalid' icon="pi pi-check" iconPos="left" label="Submit"></button>
+</form>
+
