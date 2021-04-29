@@ -32,6 +32,10 @@ export class FileService {
       })
     );
   }
+
+  download(fileId):Observable<any> {
+    return this.http.post(apiUrl + 'download', fileId);
+  }
 }
 
 /*

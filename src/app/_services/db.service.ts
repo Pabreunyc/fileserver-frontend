@@ -20,4 +20,11 @@ export class DbService {
   saveFileInfo(data):Observable<any> {
     return this.http.post(apiUrl + 'saveInfo', data);
   }
+
+  getMaintenanceFiles():Observable<any> {
+    return this.http.get(apiUrl + 'getFilesMaintenance');
+  }
+  getHelpdeskFiles():Observable<any> {
+    return this.http.get(apiUrl + 'getFilesHelpdesk');
+  }
 }

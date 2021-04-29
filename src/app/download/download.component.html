@@ -1,1 +1,14 @@
-<p>download works!</p>
+<form [formGroup]="selectModForm" (ngSubmit)='onSubmit(selectModForm)'>
+
+    <div>
+        <label for="id_module">Module</label>
+        <p-dropdown id="id_module" [options]="moduleList" formControlName="fc_module" (onChange)="selectModule($event)"></p-dropdown>        
+    </div>
+
+    <div>
+        <p-listbox [options]="availFiles" formControlName="fc_selectedFile" (onClick)="selectFile($event)"></p-listbox>
+    </div>
+
+    
+    <button pButton type="submit" icon="pi pi-check" iconPos="left" label="Submit"></button>
+</form>
