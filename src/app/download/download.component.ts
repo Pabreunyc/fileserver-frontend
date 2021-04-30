@@ -50,7 +50,7 @@ selectModForm:FormGroup;
         this.dbService.getHelpdeskFiles().subscribe(r => {
           console.log('helpdesk', r);
           this.availFiles = r.map(e => {
-            return {label:e.filename, value:{fileId:e.id, filename:e.filename} };
+            return {label:`${e.filename} (${e.id})` , value:{fileId:e.id, filename:e.filename} };
           });
         });
         break;
@@ -60,7 +60,7 @@ selectModForm:FormGroup;
         this.dbService.getMaintenanceFiles().subscribe(r => {
           console.log('maintenance', r);
           this.availFiles = r.map(e => {
-            return { label:e.file_name, value:{fileId:e.record_id, filename:e.file_name} };
+            return { label:`${e.file_name} (${e.record_id})`, value:{fileId:e.record_id, filename:e.file_name} };
           });
         });
         break;
@@ -83,7 +83,7 @@ selectModForm:FormGroup;
     fileId = parseInt(fileId);
     filename = (filename || '').trim();
     filename = filename || 'download_attachment.file';
-    
+
     console.log('download', fileId, filename);
 
     if(!module) { return; }
@@ -95,6 +95,7 @@ selectModForm:FormGroup;
     this.fileService.download(module, fileId)
       .subscribe(
         file => {
+          form.reset();
           console.log('Downloading...');
           // have a Blob so this allows download
           let aElem = document.createElement("a");

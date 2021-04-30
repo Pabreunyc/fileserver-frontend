@@ -78,6 +78,8 @@ public uploadForm;
     .subscribe(res => {
         // getting results from inner obs( dbService.base)
         console.log('file.Upload:', res);
+        alert(`${res.module} file uploaded. ID: ${res.fileId}`);
+        this.uploadForm.reset();
       },
       err => { console.log(err) },
       () => console.log('COMPLETE')
