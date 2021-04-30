@@ -33,8 +33,20 @@ export class FileService {
     );
   }
 
-  download(fileId):Observable<any> {
-    return this.http.post(apiUrl + 'download', fileId);
+  download(module, fileId):Observable<any> {
+    let fd = new FormData();
+
+    fd.append('fileId', fileId);
+    fd.append('module', module);
+
+    console.log('download', {module,fileId});
+    return this.http.post(apiUrl + 'download', fd, {responseType: 'blob'})
+      .pipe(
+        catchError( err => {
+          console.log('FileService.download.ERR', err);
+          return throwError(err.message);
+        })
+      );
   }
 }
 

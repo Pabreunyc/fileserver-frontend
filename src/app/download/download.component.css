@@ -1,0 +1,5 @@
+.listbox-20rem .ui-listbox-list * {
+    color: red;
+    font-weight: bold;
+    width: 100%;
+  }

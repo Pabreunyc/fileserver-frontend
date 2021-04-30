@@ -50,7 +50,7 @@ selectModForm:FormGroup;
         this.dbService.getHelpdeskFiles().subscribe(r => {
           console.log('helpdesk', r);
           this.availFiles = r.map(e => {
-            return {label:e.filename, value:e.id};
+            return {label:e.filename, value:{fileId:e.id, filename:e.filename} };
           });
         });
         break;
@@ -60,7 +60,7 @@ selectModForm:FormGroup;
         this.dbService.getMaintenanceFiles().subscribe(r => {
           console.log('maintenance', r);
           this.availFiles = r.map(e => {
-            return {label:e.file_name, value:e.record_id};
+            return { label:e.file_name, value:{fileId:e.record_id, filename:e.file_name} };
           });
         });
         break;
@@ -76,19 +76,37 @@ selectModForm:FormGroup;
   }
 
   onSubmit(form) {
-    console.log('onSubmit:', form.values);
-    let fileId = parseInt(form.values.fc_selectedFile);
-    console.log('download', fileId);
+    console.log('onSubmit:', form.value);
+    let {fileId,filename} = form.value.fc_selectedFile;
+    let module = form.value.fc_module;
+    
+    fileId = parseInt(fileId);
+    filename = (filename || '').trim();
+    filename = filename || 'download_attachment.file';
+    
+    console.log('download', fileId, filename);
 
+    if(!module) { return; }
     if((fileId === 0) || isNaN(fileId) ) {
       alert('Wrong fileId');
       return;
     }
 
-    this.fileService.download(fileId)
-      .subscribe(e => {
-        console.log(e);
-      });
+    this.fileService.download(module, fileId)
+      .subscribe(
+        file => {
+          console.log('Downloading...');
+          // have a Blob so this allows download
+          let aElem = document.createElement("a");
+          aElem.href = URL.createObjectURL(file);
+          aElem.download = filename;
+          aElem.click();
+        },
+        err => {
+          alert(err);
+        },
+        () => { console.log('DownloadComponent.download.COMPLETE'); }
+      );
   }
 
   // ==========================================================================

@@ -6,7 +6,12 @@
     </div>
 
     <div>
-        <p-listbox [options]="availFiles" formControlName="fc_selectedFile" (onClick)="selectFile($event)"></p-listbox>
+        <p-listbox 
+            [style]="{'width':'500px'}"
+            [options]="availFiles"
+            formControlName="fc_selectedFile"
+            (onClick)="selectFile($event)">
+        </p-listbox>
     </div>
 
     
