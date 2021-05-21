@@ -7,6 +7,7 @@
     <div>
         <label for="id_module">Module</label>
         <select name="module" id="id_module" formControlName="fc_module">
+            <option>--Select Module--</option>
             <option *ngFor="let m of moduleList$ | async">{{m}}</option>
         </select>
     </div>
