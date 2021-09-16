@@ -12,8 +12,8 @@ import { DbService } from '../_services/db.service';
   styleUrls: ['./upload.component.css']
 })
 export class UploadComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('uploadForm', {static:false}) uploadFormRef:Form;
 @ViewChild('fileUpload', {static:false} ) fileUploadRef:ElementRef;
-@ViewChild('uploadForm', {static:false}) uploadFormRef:Form;
 public moduleList$:Observable<string[]>
 
 public uploadForm;
@@ -56,6 +56,12 @@ public uploadForm;
       files: this.fileUploadRef.nativeElement.files,
     }
 
+    this.filService.uploadMulti(fileData)
+      .subscribe( r => {
+        console.log('fileService.uploadMulti', r);
+      });
+    return;
+    
     this.filService.upload(fileData).pipe(
       catchError(err => {
         console.log('Error', err);

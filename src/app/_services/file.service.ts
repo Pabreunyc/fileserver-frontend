@@ -32,6 +32,23 @@ export class FileService {
       })
     );
   }
+  uploadMulti(data):Observable<any> {
+    const fd = new FormData();
+    console.log('>>', data);
+
+    for(let i=0; i<data.files.length; i++) {
+      fd.append('files', data.files[i]);  
+    }
+
+    fd.append('username', data.username);
+    fd.append('module', data.module);
+    return this.http.post(apiUrl + 'uploadMulti', fd).pipe(
+      catchError( err => {
+        console.log('FileService.uploadMulti.ERR', err);
+        return throwError(err.error);
+      })
+    );
+  }
 
   download(module, fileId):Observable<any> {
     let fd = new FormData();

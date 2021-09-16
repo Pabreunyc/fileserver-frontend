@@ -14,7 +14,7 @@
 
     <div>
         <label for="id_fupload">File(s)</label>
-        <input #fileUpload type='file' name='fupload' id='id_fupload' formControlName="fc_fupload">
+        <input #fileUpload type='file' name='fupload' id='id_fupload' formControlName="fc_fupload" multiple>
     </div>
     
     <button pButton type="submit" [disabled]='uploadForm.invalid' icon="pi pi-check" iconPos="left" label="Submit"></button>
