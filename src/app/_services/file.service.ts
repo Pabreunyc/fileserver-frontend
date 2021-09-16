@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { forkJoin, Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
@@ -32,6 +32,22 @@ export class FileService {
       })
     );
   }
+
+  upload2(data):Observable<any> {
+    let calls = [];
+    //const fd = new FormData();    
+
+    for(let i=0; i<data.files.length; i++) {
+      let fd = new FormData();
+      fd.append('username', data.username);
+      fd.append('module', data.module);
+      fd.append('files', data.files[i]);
+      calls.push(this.http.post(apiUrl + 'upload', fd));
+    }
+    console.log('Calling:', calls);
+    return forkJoin(calls);
+  }
+
   uploadMulti(data):Observable<any> {
     const fd = new FormData();
     console.log('>>', data);

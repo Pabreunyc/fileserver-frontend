@@ -1,4 +1,4 @@
-<form [formGroup]="uploadForm" (ngSubmit)='onSubmit($event)'>
+<form [formGroup]="uploadForm" (ngSubmit)='onSubmitMulti($event)'>
     <div>
         <label for="id_username">Username</label>
         <input type="text" name="username" id="id_username" formControlName="fc_username">
@@ -14,7 +14,7 @@
 
     <div>
         <label for="id_fupload">File(s)</label>
-        <input #fileUpload type='file' name='fupload' id='id_fupload' formControlName="fc_fupload" multiple>
+        <input #fileUpload type='file' name='fupload' id='id_fupload' formControlName="fc_fupload" multiple (change)="onChange($event)">
     </div>
     
     <button pButton type="submit" [disabled]='uploadForm.invalid' icon="pi pi-check" iconPos="left" label="Submit"></button>

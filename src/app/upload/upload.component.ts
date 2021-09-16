@@ -43,6 +43,9 @@ public uploadForm;
       return this.uploadForm.controls;
   }
   // --------------------------------------------------------------------------
+  onChange(evt) {
+    console.log('onChange', evt);
+  }
 
   onSubmit(evt) {
     let fileData = undefined;
@@ -92,6 +95,27 @@ public uploadForm;
     );
   }
 
+  onSubmitMulti(evt) {
+    let fileData = undefined;
+    const { fc_username, fc_module } = this.uploadForm.value;
+    console.log({ fc_username, fc_module });
+    console.log('onSubmit.files', this.fileUploadRef.nativeElement.files);
+    
+    fileData = {
+      username: fc_username.trim(),
+      module: fc_module.trim(),
+      files: this.fileUploadRef.nativeElement.files,
+    }
+
+    this.filService.upload2(fileData).subscribe(
+      r => {
+        console.log('this.filService.upload2', r);
+      },
+      e => {
+        console.log('this.filService.upload2.ERR', e);
+      }
+    );
+  }
   // --------------------------------------------------------------------------
   initForm() {
     this.uploadForm = this.fb.group( {
