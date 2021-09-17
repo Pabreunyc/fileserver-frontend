@@ -33,9 +33,8 @@ export class FileService {
     );
   }
 
-  upload2(data):Observable<any> {
+  upload2(data:IUpload):Observable<IUploadResponse[]> {
     let calls = [];
-    //const fd = new FormData();    
 
     for(let i=0; i<data.files.length; i++) {
       let fd = new FormData();
@@ -50,7 +49,7 @@ export class FileService {
 
   uploadMulti(data):Observable<any> {
     const fd = new FormData();
-    console.log('>>', data);
+    console.log('uploadMulti', data);
 
     for(let i=0; i<data.files.length; i++) {
       fd.append('files', data.files[i]);  
@@ -81,6 +80,22 @@ export class FileService {
         })
       );
   }
+}
+
+export interface IUpload {
+  files: File[],
+  username: string,
+  module: string,
+  folder?: string
+};
+export interface IUploadResponse {    
+  destFile: string //full path on server
+  filename: string // as on user's PC
+  owner: string  
+  size: number,
+  type: string,
+  hash: string,
+  timeStamp: number
 }
 
 /*
